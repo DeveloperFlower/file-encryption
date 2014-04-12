@@ -115,16 +115,19 @@ public class Controller {
         encryptionDialog.addButtonOkListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sourceFolder = encryptionDialog.getSourceFolder();
-                String targetFolder = encryptionDialog.getTargetFolder();
-                String fileExtension = encryptionDialog.getFileExtension();
-                String key = encryptionDialog.getKey();
+                int choosing = JOptionPane.showConfirmDialog(null, "Dateien im Zielverzeichnis werden ggf. überschrieben.\nFortfahren?", "Bestätigung", JOptionPane.YES_NO_OPTION);
+                if (choosing == JOptionPane.YES_OPTION) {
+                    String sourceFolder = encryptionDialog.getSourceFolder();
+                    String targetFolder = encryptionDialog.getTargetFolder();
+                    String fileExtension = encryptionDialog.getFileExtension();
+                    String key = encryptionDialog.getKey();
 
-                try {
-                    fileEncryption.encryptFolder(sourceFolder, targetFolder, fileExtension, key);
-                    JOptionPane.showMessageDialog(null, "Verschlüsslung abgeschlossen!", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Ein Fehler ist aufgetreten!. Fehlerbeschreibung:\n" + ex.getCause().toString(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        fileEncryption.encryptFolder(sourceFolder, targetFolder, fileExtension, key);
+                        JOptionPane.showMessageDialog(null, "Verschlüsslung abgeschlossen!", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Ein Fehler ist aufgetreten!. Fehlerbeschreibung:\n" + ex.getCause().toString(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -146,17 +149,20 @@ public class Controller {
         decryptionDialog.addButtonOkListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sourceFolder = decryptionDialog.getSourceFolder();
-                String targetFolder = decryptionDialog.getTargetFolder();
-                String key = decryptionDialog.getKey();
+                int choosing = JOptionPane.showConfirmDialog(null, "Dateien im Zielverzeichnis werden ggf. überschrieben.\nFortfahren?", "Bestätigung", JOptionPane.YES_NO_OPTION);
+                if (choosing == JOptionPane.YES_OPTION) {
+                    String sourceFolder = decryptionDialog.getSourceFolder();
+                    String targetFolder = decryptionDialog.getTargetFolder();
+                    String key = decryptionDialog.getKey();
 
-                try {
-                    fileEncryption.decryptFolder(sourceFolder, targetFolder, key);
-                    JOptionPane.showMessageDialog(null, "Entschlüsslung abgeschlossen!", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null, "Ein Fehler ist aufgetreten!. Fehlerbeschreibung:\n" + ex.getCause().toString(), "Fehler", JOptionPane.ERROR_MESSAGE);
-                } catch (IllegalKeyException ex) {
-                    JOptionPane.showMessageDialog(null, "Schlüssel ist inkorrekt! Bitte versuchen Sie es erneut", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        fileEncryption.decryptFolder(sourceFolder, targetFolder, key);
+                        JOptionPane.showMessageDialog(null, "Entschlüsslung abgeschlossen!", "Erfolg", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, "Ein Fehler ist aufgetreten!. Fehlerbeschreibung:\n" + ex.getCause().toString(), "Fehler", JOptionPane.ERROR_MESSAGE);
+                    } catch (IllegalKeyException ex) {
+                        JOptionPane.showMessageDialog(null, "Schlüssel ist inkorrekt! Bitte versuchen Sie es erneut", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
